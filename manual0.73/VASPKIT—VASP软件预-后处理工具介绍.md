@@ -656,7 +656,7 @@ CO/CHGCAR C/CHGCAR O/CHGCAR
 
 ##### 将NEB路径转成PDB文件以可视化
 
-功能`504`将`Nudged Elastic Band`（一种过渡态的搜索方法）的`images`组合成多帧PDB文件，通过可视化该文件可以查看`VTST`脚本插值生成的路径是不是我们[预期的能量路径](`http://blog.sina.com.cn/s/blog_b364ab230102vghk.html`)。`VTST`的`nebmovie.pl`可以将`images`组合成多帧xyz结构文件，但是由于xyz文件不包含晶格信息，无法查看周期性的映像，若分子处于盒子边缘，可能无法查看完整的能量路径。以目录中的ORR反应（/examples/nudged_elastic_band/neb_animation）为例说明功能`504`的用法。启动`VASPKIT`,输入`5`选择功能`Catalysis-ElectroChem Kit`，在下一个界面输入`504`选择`TheConvert NEB-Path to PDB Format for Animation`。`VASPKIT`将会从00~07目录里面读取POSCAR组合生成`NEB_*.pdb`。
+功能`504`将`Nudged Elastic Band`（一种过渡态的搜索方法）的`images`组合成多帧PDB文件，通过可视化该文件可以查看`VTST`脚本插值生成的路径是不是我们[预期的能量路径](http://blog.sina.com.cn/s/blog_b364ab230102vghk.html)。`VTST`的`nebmovie.pl`可以将`images`组合成多帧xyz结构文件，但是由于xyz文件不包含晶格信息，无法查看周期性的映像，若分子处于盒子边缘，可能无法查看完整的能量路径。以目录中的ORR反应（/examples/nudged_elastic_band/neb_animation）为例说明功能`504`的用法。启动`VASPKIT`,输入`5`选择功能`Catalysis-ElectroChem Kit`，在下一个界面输入`504`选择`TheConvert NEB-Path to PDB Format for Animation`。`VASPKIT`将会从00~07目录里面读取POSCAR组合生成`NEB_*.pdb`。
 
 > 提交任务前，我要检查一遍设想的对不对，运行一下504得到一个`NEB_initial.pdb`文件。提交任务后，比如说算了30步，我想查看一下算的怎么样了，需要再运行一下504，得到一个`NEB_30.pdb`文件,同时提示你`NEB is still runing, NOW 30 step!`。如果任务算完了，我运行下504,得到`NEB_final.pdb` 文件,同时提示你`NEB has finished`。 如果NSW设置的100，跑了100步没有收敛，运行504同样会得到得到`NEB_100_end.pdb`文件，但是会提示你`NEB has stopped, but has reached NSW step, NOT converged!`。`
 
