@@ -8,13 +8,13 @@
 
 **主要功能有**：
 
-1.自动生成 VASP 计算所需的必备文件，包括 INCAR、POTCAR、POSCAR 等，并对其进行格式检查  
-2.结构对称性查找 
-3.催化方面的工具，根据层数或者高度区间固定原子，NEB 路径生成、NEB 路径生成可视化的 PDB 文件、虚频校正等。 
-4.生成晶体的能带路径（包括杂化泛函），并处理能带数据 
-5.处理态密度 DOS 和投影态密度 PDOS 
-6.处理电荷密度、静电势，绘制是空间波函数 
-7.其他功能，比如热力学量校正（吸附质分子和气相分子），光学、分子动力学、导电率和半导体方面的小工具。
+1. 自动生成 VASP 计算所需的必备文件，包括 INCAR、POTCAR、POSCAR 等，并对其进行格式检查
+2. 结构对称性查找
+3. 催化方面的工具，根据层数或者高度区间固定原子，NEB 路径生成、NEB 路径生成可视化的 PDB 文件、虚频校正等
+4. 生成晶体的能带路径（包括杂化泛函），并处理能带数据
+5. 处理态密度 DOS 和投影态密度 PDOS
+6. 处理电荷密度、静电势，绘制是空间波函数
+7. 其他功能，比如热力学量校正（吸附质分子和气相分子），光学、分子动力学、导电率和半导体方面的小工具。
 
 >**详细可见附录：VASPKIT菜单功能介绍**
 
@@ -62,17 +62,17 @@ MINI_INCAR               .FALSE.            # .TRUE. or .FALSE.;
 SET_FERMI_ENERGY_ZERO    .TRUE.             # .TRUE. or .FALSE.;  
 SET_INCAR_WRITE_MODE     OVERRIDE           #  OVERRIDE, APPEND,BACK-UP-OLD,BACK-UP-NEW; 
 ```
-设置好POTCAR的目录和完成一些其他的设置后，就可以启动`vaspkit`了。
-为了方便，可以将`vaspkit`的绝对路径加入到环境变量里，如果是LINUX的用户，可以这样操作：
+设置好你本地的赝势库 POTCAR 目录，以及完成一些其他的设置后，就可以启动`vaspkit`了。
+为了方便，可以将`vaspkit`的绝对路径加入到环境变量里，如果是 LINUX 的用户，可以这样操作：
 ```bash
 echo 'export PATH=/home/vaspkit.0.73/bin/:$PATH' >> ~/.bashrc
 source ~/.bashrc
 ```
-其中`/home/vaspkit.0.73/bin/`用自己的`vaspkit`可执行文件所在`bin`目录的绝对路径替代。
+其中`/home/vaspkit.0.73/bin/`需要将用户自己的`vaspkit`可执行文件所在`bin`目录的绝对路径替代。
 
-> `vaspkit`自`0.73`版之后**提供了自动配置脚本**`setup.sh`，`source setup.sh` 或者`bash setup.sh`可以完成配置。对于新用户来说非常友好，但是赝势目录还需自己设置。如果已经存在`~/.vaspkit`，将不会覆盖它，仍使用老版本的环境变量。
+> `vaspkit`自`0.73`版之后**提供了自动配置脚本**`setup.sh`。执行`source setup.sh` 或者`bash setup.sh`即可以完成配置。对于新用户来说非常友好，但是赝势库目录还需自己设置。如果已经存在`~/.vaspkit`，上述操作不会覆盖它，仍使用老版本的环境变量。
 
-在终端直接输入`vaspkit`或者`/home/vaspkit.0.73/bin/vaspkit`开始运行`vaspkit`程序。不出意外，你将会得到一个与我展示的一致的，非常萌的界面：
+完成上述设置后，在终端直接输入`vaspkit`或者`/home/vaspkit.0.73/bin/vaspkit`即可开始运行`vaspkit`程序。不出意外，您将会看到一个与下面所展示一致的，非常萌的界面：
 
 ```
             \\\///
@@ -109,7 +109,7 @@ source ~/.bashrc
  0)  Quit
  ------------>>
 ```
-如果出现以下问题,说明你的LINUX运行依赖库版本太低，需要升级（不建议），可以联系开发者获得在低版本LINUX环境下编译的版本。
+如果出现以下问题,说明您的 LINUX 运行依赖库版本太低，需要升级（不建议），可以联系开发者获得在低版本 LINUX 环境下编译的版本。
 ```bash
 vaspkit: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by vaspkit)
 ```
@@ -123,7 +123,7 @@ chmod u+x /home/vaspkit.0.73/bin/vaspkit
 本教程将介绍使用`vaspkit`生成VASP的输入文件，使用PBE和HSE06计算能带，提取分析分波态密度和局域态密度，校正热力学量计算自由能、生成差分电荷密度, 催化相关的工具和能带反折叠计算。能带计算包含了使用普通泛函和杂化泛函两个例子，而热力学量校正主要计算零点振动能及温度对自由能和焓的贡献。
 
 #### 3.1 VASP输入文件的生成和检查
-为了成功运行VASP计算任务，我们至少需要4个文件：INCAR、POSCAR、POTCAR及KPOINTS，INCAR是告诉 VASP算什么任务，怎么算的控制文件；POSCAR是包含晶格信息，原子坐标信息和原子速度信息（MD用）的文件；POTCAR是赝势文件，也就是将内层电子用势函数表示；KPOINTS（可包含在INCAR内，不推荐省略）包含了倒易空间内K点信息，波函数会在这些点上积分得到电荷密度。
+为了成功运行VASP计算任务，我们至少需要4个文件：INCAR、POSCAR、POTCAR 及 KPOINTS。INCAR 文件是告诉 VASP 算什么任务、怎么算的控制文件；POSCAR是包含晶格信息、原子坐标信息和原子速度信息（MD用）的文件；POTCAR是赝势文件，也就是将内层电子用势函数表示；KPOINTS（可包含在INCAR内，不推荐省略）包含了倒易空间内 K点信息，波函数会在这些点上积分得到电荷密度。
 `vaspkit 0.71`以后的版本将K点生成、POTCAR生成和INCAR生成整合到了功能`1`：`VASP Input Files Generator`中。
 ```
  101) Customize INCAR File
@@ -136,7 +136,7 @@ chmod u+x /home/vaspkit.0.73/bin/vaspkit
  108) Successive Procedure to Generate VASP Files and Check
  109) Check All VASP Files
 ```
-下面展示怎么使用`vaspkit`进行一个VASP计算任务。
+下面我们将展示怎么使用`vaspkit`进行一个 VASP 计算任务。
 `POSCAR`一般由软件生成或者从数据库中获得，简单体系可自己搭建。本例中从数据库（http://www.catalysthub.net/）中获得**纤锌矿ZnO**的POSCAR文件（也可以下载CIF文件，然后通过`vaspkit`的功能`105`或者`VESTA`转化成POSCAR文件，只是原子位置分数占据的问题需要注意）。在`catalysthub`中检索`ZnO`，检索结果如下所示。纤锌矿ZnO的为六方晶系，空间群为`P63mc`。因此下载第二行的POSCAR，下载的文件名为`ZnO-1811117.vasp`。置于`vaspkit.0.73/examples/ZnO_optimization`目录下。
 
 ```
@@ -149,7 +149,7 @@ Zn1O1	225	Fm-3m	-F 4 2 3	Cubic	0.71940 eV	CIF | POSCAR | LAMMPS
 Zn1O1	221	Pm-3m	-P 4 2 3	Cubic	0.00000 eV	CIF | POSCAR | LAMMPS	
 
 ```
-接下来进行晶格优化得到合理的结构。将其改名为POSCAR文件。
+接下来进行晶格优化得到合理的结构。将其改名为 POSCAR 文件。
 ```bash
 cp -f ZnO-1811117.vasp POSCAR
 ```
@@ -181,7 +181,7 @@ cp -f ZnO-1811117.vasp POSCAR
  Input Key-Parameters (STH6D2 means HSE06-D2 Static-Calcualtion)
  LR
 ```
-输入`LR`，就会得到一个预设好的用于做晶格弛豫任务的INCAR（***有些模板需要手动修改。比如DFT+U的U值设定，NEB的IMAGES数目等***）。如果已经有INCAR文件，则原来的INCAR文件会被覆盖。你可以编辑`~/.vaspkit`更改INCAR的输出设置。只需将最后一行的`SET_INCAR_WRITE_MODE`由默认的`OVERRIDE`更改为 `APPEND,BACK-UP-OLD,BACK-UP-NEW`中的一个，分别对应于新的内容增加到原有的INCAR后面，备份原有的INCAR再写入新的INCAR和写入到新的INCAR.new里面。
+输入`LR`，就会得到一个预设好的用于做晶格弛豫任务的INCAR（***有些模板需要手动修改。比如 DFT+U 的 U值设定，NEB 的 IMAGES数目等***）。如果已经有INCAR文件，则原来的INCAR文件会被覆盖。你可以编辑`~/.vaspkit`更改INCAR的输出设置。只需将最后一行的`SET_INCAR_WRITE_MODE`由默认的`OVERRIDE`更改为 `APPEND,BACK-UP-OLD,BACK-UP-NEW`中的一个，分别对应于新的内容增加到原有的INCAR后面，备份原有的INCAR再写入新的INCAR和写入到新的INCAR.new里面。
 接下来生成KPOINTS文件。对于非能带计算，只需用程序自动撒点的方式，但是需要用户选择撒点方式和K点密度。具体内容可以参考李强的教程`Learn VASP The Hard Way （Ex1）: VASP基本输入文件的准备`。启动`vaspkit`,输入`1`选择功能`VASP Input Files Generator`，然后输入`102`选择功能`Generate KPOINTS File for SCF Calculation`，接下来输入`2`选择`Gamma Scheme`撒点方式（稳妥的选择），会得到以下的显示信息：
 
 ```
@@ -242,7 +242,7 @@ grep ENMAX POTCAR
  POSCAR found type information on POSCAR  O 
  ERROR: the type information is not consistent with the number of types
 ```
->通过分析发现，VASP只读出了O的元素和赝势，*Zn*没有从POSCAR中读出，因此报错。原因在于，从数据库下载的POSCAR中空格的分隔符是制表符`\t`，VASP不能正确读出以`\t`为分隔符的字符串。同样的问题也会在INCAR中出现。另外在WINDOWS系统下生成的POSCAR或INCAR在VASP中可能会出现非常奇怪的错误。最致命的是VASP**不会自动检查POSCAR中的元素类型是否与POTCAR元素类型是否一致**，也就是你算石墨烯也可以用H的赝势，并不会报错，但是结果一定是错的！因此`vaspkit 0.71`以后的版本加入了格式纠正和赝势元素检查的功能`109`。
+>通过分析发现，VASP只读出了`O`的元素和赝势，*Zn*没有从POSCAR中读出，因此报错。原因在于，从数据库下载的POSCAR中空格的分隔符是制表符`\t`，VASP不能正确读出以`\t`为分隔符的字符串。同样的问题也会在INCAR中出现。另外在WINDOWS系统下生成的POSCAR或INCAR在VASP中可能会出现非常奇怪的错误。最致命的是VASP**不会自动检查POSCAR中的元素类型是否与POTCAR元素类型是否一致**，也就是你算石墨烯也可以用H的赝势，并不会报错，但是结果一定是错的！因此`vaspkit 0.71`以后的版本加入了格式纠正和赝势元素检查的功能`109`。
 输入`109`,`vaspkit`会自动进行INCAR和POSCAR的格式纠正，并检查赝势元素是否一致。
 ```
  -->> (1) Reading Structural Parameters from POSCAR File...
@@ -304,7 +304,7 @@ cp -f PRIMCELL.vasp POSCAR
 下图展示的是磷化镓的primitive cell和其第一布里渊区的高对称点位置，由SeeK-path网站生成。
 ![](Brillouin_zone.png)
 ##### PBE泛函计算能带
-PBE泛函计算能带分为两步，第一步使用普通K点网格（功能102）进行自洽计算 ，启动`vaspkit`,输入`1`选择`VASP Input Files Generator`，再选择`108`选择`Successive Procedure to Generate VASP Files and Check`功能，输入`ST`,生成静态自洽的INCAR，并按照提示生成自洽用的K点。本例中`ISMEAR=0`，即`Gaussian Smearing`方法，如果是金属体系可以选择换成`ISMEAR=1`。接着调用VASP计算。第二步：***使用 KPATH.in里的高对称点信息作为新的 KPOINTS，然后读入电荷 CHGCAR***进行能带非自洽计算，即：
+PBE泛函计算能带分为两步，第一步使用普通K点网格（功能102）进行自洽计算 ，启动`vaspkit`,输入`1`选择`VASP Input Files Generator`，再选择`108`选择`Successive Procedure to Generate VASP Files and Check`功能，输入`ST`,生成静态自洽的INCAR，并按照提示生成自洽用的K点。本例中`ISMEAR=0`，即`Gaussian Smearing`方法，如果是金属体系可以选择换成`ISMEAR=1`。接着调用VASP计算。第二步：***使用 KPATH.in 里的高对称点信息作为新的 KPOINTS，然后读入电荷 CHGCAR***进行能带非自洽计算，即：
 ```bash
 cp -f KPATH.in KPOINTS
 echo "ICHARG=11" >> INCAR
