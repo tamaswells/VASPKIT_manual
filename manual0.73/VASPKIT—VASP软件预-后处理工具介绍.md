@@ -3,11 +3,19 @@
 ---
 [TOC]
 ### 1. VASPKIT简介
-`VASP`的全称`Vienna Ab-initio Simulation Package`，是维也纳大学Hafner小组开发的进行电子结构计算和量子力学-分子动力学模拟软件包。它是目前材料模拟和计算物质科学研究中最流行的商用软件之一。与Material Studio软件包中的`CASTEP`功能类似，但是`VASP`的精度相对要高一点。不同于`CASTEP`的图形界面，`VASP`是一套没有界面的计算软件，建模、可视化、数据分析都需要依赖第三方工具如P4VASP、ASE、Pymatgen、VESTA软件等。VESTA、P4VASP主要是用来建模、可视化和分析部分数据。而ASE、Pymatgen这些软件擅长于数据处理，但是安装比较麻烦，同时入门门槛比较高，需要使用者有一定的编程水平。`VASP`用户的学科分布很广，有做催化的，有做光学的，有做材料的，各个领域的数据后处理方式大相径庭。很多用户开发并贡献了自己所在领域用到的的脚本或者小程序，本人就开发了一款用来处理结构文件的`POSCARtookit`脚本。但是对于新用户来说，找到并成功使用这些脚本是不太容易的。因此一款容易上手、功能强大的预-后数据处理软件`vaspkit`应运而生。
-最新版的`vaspkit`是王伟老师、许楠、刘锦程，唐刚，李强和乐平共同努力的成果。`vaspkit 0.72`版本相对于之前的版本做了很多菜单调整，将功能相似的进行了归类，优化了一些已有功能，并增加了一些与催化有关的功能。`VASPKIT release` 版本是一款用`FORTRAN`编写，在`LINUX`环境下运行的二进制软件。它几乎不依赖于其他库，软件体积仅仅5.0M，无需安装即可使用，同时`EXAMPLES`目录下面有主要功能的测试例子，方便用户学习使用。
+`VASP`的全称`Vienna Ab-initio Simulation Package`，是维也纳大学Hafner小组开发的进行电子结构计算和量子力学-分子动力学模拟软件包。它是目前材料模拟和计算物质科学研究中最流行的商用软件之一。与Material Studio软件包中的`CASTEP`功能类似，但是`VASP`的精度相对要高一点。不同于`CASTEP`的图形界面，`VASP`是一套没有界面的计算软件，建模、可视化、数据分析都需要依赖第三方工具如 P4VASP、ASE、Pymatgen、VESTA 软件等。VESTA、P4VASP 主要是用来建模、可视化和分析部分数据。而 ASE、Pymatgen 这些软件擅长于数据处理，但是安装比较麻烦，同时入门门槛比较高，需要使用者有一定的编程水平。`VASP`用户的学科分布很广，有做催化的，有做光学的，有做材料的，各个领域的数据后处理方式大相径庭。很多用户开发并贡献了自己所在领域用到的的脚本或者小程序，本人就开发了一款用来处理结构文件的`POSCARtookit`脚本。但是对于新用户来说，找到并成功使用这些脚本是不太容易的。因此一款容易上手、功能强大的预-后数据处理软件`vaspkit`应运而生。
+最新版的`vaspkit`是王伟老师、[许楠](https://github.com/tamaswells)、刘锦程，[唐刚](https://github.com/obaica)，李强和[乐平](https://github.com/LePingKYXK)共同努力的成果。`vaspkit 0.72`版本相对于之前的版本做了很多菜单调整，将功能相似的进行了归类，优化了一些已有功能，并增加了一些与催化有关的功能。`VASPKIT release` 版本是一款用`FORTRAN`编写，在`LINUX`环境下运行的二进制软件。它几乎不依赖于其他库，软件体积仅仅5.0M，无需安装即可使用，同时`EXAMPLES`目录下面有主要功能的测试例子，方便用户学习使用。
 
->**主要功能有**：1.自动生成VASP计算所需的必备文件，包括INCAR、POTCAR、POSCAR等，并对其进行格式检查  2.结构对称性查找 3.催化方面的工具，根据层数或者高度区间固定原子，NEB路径生成、NEB路径生成可视化的PDB文件、虚频校正等。 4.生成晶体的能带路径（包括杂化泛函），并处理能带数据 5.处理态密度DOS和投影态密度PDOS 6.处理电荷密度、静电势，绘制是空间波函数 7.其他功能，比如热力学量校正（吸附质分子和气相分子），光学、分子动力学、导电率和半导体方面的小工具。
->
+**主要功能有**：
+
+1.自动生成 VASP 计算所需的必备文件，包括 INCAR、POTCAR、POSCAR 等，并对其进行格式检查  
+2.结构对称性查找 
+3.催化方面的工具，根据层数或者高度区间固定原子，NEB 路径生成、NEB 路径生成可视化的 PDB 文件、虚频校正等。 
+4.生成晶体的能带路径（包括杂化泛函），并处理能带数据 
+5.处理态密度 DOS 和投影态密度 PDOS 
+6.处理电荷密度、静电势，绘制是空间波函数 
+7.其他功能，比如热力学量校正（吸附质分子和气相分子），光学、分子动力学、导电率和半导体方面的小工具。
+
 >**详细可见附录：VASPKIT菜单功能介绍**
 
 **0.73版本新增功能和修复的BUGs **
@@ -296,7 +304,7 @@ cp -f PRIMCELL.vasp POSCAR
 下图展示的是磷化镓的primitive cell和其第一布里渊区的高对称点位置，由SeeK-path网站生成。
 ![](Brillouin_zone.png)
 ##### PBE泛函计算能带
-PBE泛函计算能带分为两步，第一步使用普通K点网格（功能102）进行自洽计算 ，启动`vaspkit`,输入`1`选择`VASP Input Files Generator`，再选择`108`选择`Successive Procedure to Generate VASP Files and Check`功能，输入`ST`,生成静态自洽的INCAR，并按照提示生成自洽用的K点。本例中`ISMEAR=0`，即`Gaussian Smearing`方法，如果是金属体系可以选择换成`ISMEAR=1`。接着调用VASP计算。第二步：***使用KPATH.in里的高对称点信息作为新的KPOINTS，然后读入电荷CHGCAR***进行能带非自洽计算，即：
+PBE泛函计算能带分为两步，第一步使用普通K点网格（功能102）进行自洽计算 ，启动`vaspkit`,输入`1`选择`VASP Input Files Generator`，再选择`108`选择`Successive Procedure to Generate VASP Files and Check`功能，输入`ST`,生成静态自洽的INCAR，并按照提示生成自洽用的K点。本例中`ISMEAR=0`，即`Gaussian Smearing`方法，如果是金属体系可以选择换成`ISMEAR=1`。接着调用VASP计算。第二步：***使用 KPATH.in里的高对称点信息作为新的 KPOINTS，然后读入电荷 CHGCAR***进行能带非自洽计算，即：
 ```bash
 cp -f KPATH.in KPOINTS
 echo "ICHARG=11" >> INCAR
@@ -309,8 +317,8 @@ echo -e "\n" $(sed -n 6p DOSCAR | awk '{print $4}') > FERMI_LEVEL.in
 
 
 #####  HSE06杂化泛函计算能带
-杂化泛函相比于PBE泛函和DFT+U方法，在计算带隙方面很有优势，但是HSE06的杂化泛函需要KPOINTS里既有权重不为0的K点进行自洽计算，又要求有权重为0的高对称点计算能带性质。因此操作流程颇为繁琐。
-重启`vaspkit`，输入`25`选择功能`Hybrid-DFT Band-Structure`，在下一个界面输入`251`选择`Generate KPOINTS File for Hybrid Band-Structure Calculation`。再输入`1`选择`Monkhorst-Pack Scheme`用MP方法生成自洽用的K点网格并根据建议输入`0.04`选择较密的K点密度（权重不为0的K点用于自恰计算），**接下来还需手动指定能带路径上K点的密度，用于能带计算**，再次输入`0.04`，即可生成HSE06杂化泛函所需的KPOINTS。0.72以前的版本在不同的能带路径上取相同的K点数，从而导致在不同路径上的K分布并不均匀，如下图a所示。`VASPKIT`最新版支持根据给定k点间隔**自动确定不同能带路径上的K点数**，从而保证在整个能带计算中**均匀撒点**，如下图b所示。
+杂化泛函相比于 PBE 泛函和 DFT+U 方法，在计算带隙方面很有优势，但是HSE06的杂化泛函需要 KPOINTS里既有权重不为 0的 K点进行自洽计算，又要求有权重为 0的高对称点计算能带性质。因此操作流程颇为繁琐。
+重启`vaspkit`，输入`25`选择功能`Hybrid-DFT Band-Structure`，在下一个界面输入`251`选择`Generate KPOINTS File for Hybrid Band-Structure Calculation`。再输入`1`选择`Monkhorst-Pack Scheme`用MP方法生成自洽用的K点网格并根据建议输入`0.04`选择较密的K点密度（权重不为 0的 K点用于自恰计算），**接下来还需手动指定能带路径上K点的密度，用于能带计算**，再次输入`0.04`，即可生成HSE06杂化泛函所需的 KPOINTS。0.72以前的版本在不同的能带路径上取相同的K点数，从而导致在不同路径上的K分布并不均匀，如下 图a 所示。`VASPKIT`最新版支持根据给定k点间隔**自动确定不同能带路径上的K点数**，从而保证在整个能带计算中**均匀撒点**，如下图b所示。
 
 ```bash
  ======================= K-Mesh Scheme ==========================
@@ -334,10 +342,10 @@ echo -e "\n" $(sed -n 6p DOSCAR | awk '{print $4}') > FERMI_LEVEL.in
 
 ![](uniform_non-uniform.jpg)
 
-可通过KPOINTS文件第一行查看产生K点产生信息。`Parameters to Generate KPOINTS (Don't Edit This Line):  0.040 0.040 24 126 6 28 10 30 24 20 14 `，第一个和第二个数据分别决定总能计算（权重不为零部分）和能带计算（权重为零部分）K点密度，也就是我们之前输入的数值，24表示总能计算部分在不可约布里渊区的K点数目，126表示能带计算中总K点数目，6表示共有6条能带路径，从第一到第六条能带上分别选取28,10,30,24,20和14个K点，共126个K点。**此均匀撒点的方式能够提高能带的计算效率**。但是**请注意：由于0.72当前及之后版本将采用新的杂化能带计算KPOINTS文件格式，不再兼容由VASPKIT早期产生的杂化能带数据提取。**
+可通过KPOINTS文件第一行查看产生K点产生信息。`Parameters to Generate KPOINTS (Don't Edit This Line):  0.040 0.040 24 126 6 28 10 30 24 20 14 `，第一个和第二个数据分别决定总能计算（权重不为零部分）和能带计算（权重为零部分）K点密度，也就是我们之前输入的数值，24表示总能计算部分在不可约布里渊区的K点数目，126表示能带计算中总K点数目，6表示共有6条能带路径，从第一到第六条能带上分别选取28, 10, 30, 24, 20和14个K点，共126个K点。**此均匀撒点的方式能够提高能带的计算效率**。但是**请注意：由于0.72当前及之后版本将采用新的杂化能带计算KPOINTS文件格式，不再兼容由VASPKIT早期产生的杂化能带数据提取。**
 
-因为HSE06计算非常耗时，因此本例中采用两步法加速收敛，当然也可以跳过第一步直接用HSE06进行自洽。第一步：使用PBE泛函产生波函数和电子密度，第二步：***保持KPOINTS不变，读入波函数***进行HSE06计算。
-利用功能`Customize INCAR File`生成第一步PBE自洽需要的INCR。重启`vaspkit`,输入`1`选择`VASP Input Files Generator`，再选择`101`选择`Customize INCAR File`功能，输入`ST`,生成静态自洽的INCAR。本例中`ISMEAR=0`，即`Gaussian Smearing`方法，如果是金属体系可以选择换成`ISMEAR=1`。调用VASP计算，待自洽完成后执行第二步HSE06计算。重启`vaspkit`, 选择功能`101 Customize INCAR File`功能，输入`STH6`,生成HSE06计算所需要的INCAR。再次调用VASP计算后，就完成了HSE06的自洽计算。
+因为HSE06计算非常耗时，因此本例中采用两步法加速收敛，当然也可以跳过第一步直接用 HSE06 进行自洽。第一步：使用 PBE 泛函产生波函数和电子密度，第二步：***保持 KPOINTS不变，读入波函数*** 进行HSE06计算。
+利用功能`Customize INCAR File`生成第一步PBE自洽需要的INCAR。重启`vaspkit`,输入`1`选择`VASP Input Files Generator`，再选择`101`选择`Customize INCAR File`功能，输入`ST`,生成静态自洽的INCAR。本例中`ISMEAR=0`，即`Gaussian Smearing`方法，如果是金属体系可以选择换成`ISMEAR=1`。调用VASP计算，待自洽完成后执行第二步 HSE06计算。重启`vaspkit`, 选择功能`101 Customize INCAR File`功能，输入`STH6`,生成HSE06计算所需要的INCAR。再次调用VASP计算后，就完成了HSE06的自洽计算。
 接下来使用`vaspkit`提取能带数据，并输出高对称点在能带图中的坐标信息。输入`25`选择功能`Hybrid-DFT Band-Structure`，在下一个界面输入`252`选择`Read Band-Structure for Hybrid-DFT Calculation`处理能带数据。处理结果如下所示
 
 ```
