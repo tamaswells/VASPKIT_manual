@@ -3,8 +3,8 @@
 ---
 [TOC]
 ### 1. VASPKIT简介
-`VASP`的全称`Vienna Ab-initio Simulation Package`，是维也纳大学Hafner小组开发的进行电子结构计算和量子力学-分子动力学模拟软件包。它是目前材料模拟和计算物质科学研究中最流行的商用软件之一。与Material Studio软件包中的`CASTEP`功能类似，但是`VASP`的精度相对要高一点。不同于`CASTEP`的图形界面，`VASP`是一套没有界面的计算软件，建模、可视化、数据分析都需要依赖第三方工具如 P4VASP、ASE、Pymatgen、VESTA 软件等。VESTA、P4VASP 主要是用来建模、可视化和分析部分数据。而 ASE、Pymatgen 这些软件擅长于数据处理，但是安装比较麻烦，同时入门门槛比较高，需要使用者有一定的编程水平。`VASP`用户的学科分布很广，有做催化的，有做光学的，有做材料的，各个领域的数据后处理方式大相径庭。很多用户开发并贡献了自己所在领域用到的的脚本或者小程序，本人就开发了一款用来处理结构文件的`POSCARtookit`脚本。但是对于新用户来说，找到并成功使用这些脚本是不太容易的。因此一款容易上手、功能强大的预-后数据处理软件`vaspkit`应运而生。
-最新版的`vaspkit`是王伟老师、[许楠](https://github.com/tamaswells)、刘锦程，[唐刚](https://github.com/obaica)，李强和[乐平](https://github.com/LePingKYXK)共同努力的成果。`vaspkit 0.72`版本相对于之前的版本做了很多菜单调整，将功能相似的进行了归类，优化了一些已有功能，并增加了一些与催化有关的功能。`VASPKIT release` 版本是一款用`FORTRAN`编写，在`LINUX`环境下运行的二进制软件。它几乎不依赖于其他库，软件体积仅仅5.0M，无需安装即可使用，同时`EXAMPLES`目录下面有主要功能的测试例子，方便用户学习使用。
+`VASP`的全称`Vienna Ab-initio Simulation Package`，是维也纳大学Hafner小组开发的进行电子结构计算和量子力学-分子动力学模拟软件包。它是目前材料模拟和计算物质科学研究中最流行的商用软件之一。与Material Studio软件包中的`CASTEP`功能类似，但是`VASP`的精度相对要高一点。不同于`CASTEP`的图形界面，`VASP`是一套没有图形界面的计算软件，建模、可视化、数据分析都需要依赖第三方工具如 P4VASP、ASE、Pymatgen、VESTA 软件等。VESTA、P4VASP 主要是用来建模、可视化和分析部分数据。而 ASE、Pymatgen 这些软件擅长于数据处理，但是安装比较麻烦，同时入门门槛比较高，需要使用者有一定的编程水平。`VASP`用户的学科分布很广，有做催化的，有做光学的，有做材料的，各个领域的数据后处理方式大相径庭。很多用户开发并贡献了自己所在领域用到的的脚本或者小程序，本人就开发了一款用来处理结构文件的`POSCARtookit`脚本。但是对于新用户来说，找到并成功使用这些脚本是不太容易的。因此一款容易上手、功能强大的预-后数据处理软件`vaspkit`应运而生。
+最新版的`vaspkit`是王伟老师、[许楠](https://github.com/tamaswells)、刘锦程，[唐刚](https://github.com/obaica)，[李强](https://github.com/bigbrosci)和[乐平](https://github.com/LePingKYXK)共同努力的成果。`vaspkit 0.72`版本相对于之前的版本做了很多菜单调整，将功能相似的进行了归类，优化了一些已有功能，并增加了一些与催化有关的功能。`VASPKIT release` 版本是一款用`FORTRAN`编写，在`LINUX`环境下运行的二进制软件。它几乎不依赖于其他库，软件体积仅仅5.0M，无需安装即可使用，同时`EXAMPLES`目录下面有主要功能的测试例子，方便用户学习使用。
 
 **主要功能有**：
 
@@ -137,7 +137,7 @@ chmod u+x /home/vaspkit.0.73/bin/vaspkit
  109) Check All VASP Files
 ```
 下面我们将展示怎么使用`vaspkit`进行一个 VASP 计算任务。
-`POSCAR`一般由软件生成或者从数据库中获得，简单体系可自己搭建。本例中从数据库（http://www.catalysthub.net/）中获得**纤锌矿ZnO**的POSCAR文件（也可以下载CIF文件，然后通过`vaspkit`的功能`105`或者`VESTA`转化成POSCAR文件，只是原子位置分数占据的问题需要注意）。在`catalysthub`中检索`ZnO`，检索结果如下所示。纤锌矿ZnO的为六方晶系，空间群为`P63mc`。因此下载第二行的POSCAR，下载的文件名为`ZnO-1811117.vasp`。置于`vaspkit.0.73/examples/ZnO_optimization`目录下。
+`POSCAR`一般由软件生成或者从数据库中获得，简单体系可自己搭建。本例中从数据库 <http://www.catalysthub.net/> 中获得**纤锌矿ZnO**的POSCAR文件（也可以下载CIF文件，然后通过`vaspkit`的功能`105`或者`VESTA`转化成POSCAR文件，只是原子位置分数占据的问题需要注意）。在`catalysthub`中检索`ZnO`，检索结果如下所示。纤锌矿ZnO的为六方晶系，空间群为`P63mc`。因此下载第二行的POSCAR，下载的文件名为`ZnO-1811117.vasp`。置于`vaspkit.0.73/examples/ZnO_optimization`目录下。
 
 ```
 The following shows the results (4) for: ZnO
@@ -213,7 +213,7 @@ Gamma
 
 <img src="K-setting.png" width=80% height=80% />
 
-生成KPOINTS的同时，**会根据POSCAR中的元素类型从赝势库中提取并组合生成POTCAR**，前提是你在`~/.vaspkit`里正确设置了`PBE_PATH`的路径，并根据`POTCAR_TYPE`选择是生成GGA-PW91、LDA还是PBE的赝势。值得注意的是提示信息`Written POTCAR File with the Recommended Potential!`，意味着`vaspkit`根据[VASP官网的推荐](http://cms.mpi.univie.ac.at/vasp/vasp/Recommended_PAW_potentials_DFT_calculations_using_vasp_5_2.html)从PBE的赝势库中选择赝势。
+生成KPOINTS的同时，**会根据POSCAR中的元素类型从赝势库中提取并组合生成POTCAR**，前提是你在`~/.vaspkit`里正确设置了`PBE_PATH`的路径，并根据`POTCAR_TYPE`选择是生成GGA-PW91、LDA还是PBE的赝势。值得注意的是提示信息`Written POTCAR File with the Recommended Potential!`，意味着`vaspkit`根据[VASP官网的推荐](http://cms.mpi.univie.ac.at/vasp/vasp/Recommended_PAW_potentials_DFT_calculations_using_vasp_5_2.html) 从PBE的赝势库中选择赝势。
 PBE的赝势分为几种，无后缀、`_pv,_sv,_d` 和数字后缀，`_pv,_sv,_d` 就是说`semi-core`的`p,s`或者`d`也当做价态处理了。因为有些情况下，次外层电子也参与了成键。刘锦程提到进行`Bader`电荷分析，需要采用带`_pv,_sv`的赝势。特别地，官网提到`Important Note: If dimers with short bonds are present in the compound (O2 , CO, N2 , F2 , P2 , S2 , Cl2 ), we recommend to use the _h potentials. Specifically, C_h, O_h, N_h, F_h, P_h, S_h, Cl_h.`常用的做法是：用两种赝势测试一下对自己所关心的问题的影响情况。在影响不大的情况下，选用不含后缀的赝势，毕竟包含更多的价电子，截断能上升很多，计算量明显增大。
 
 >如果需要手动生成POTCAR，可以通过功能`104`**手动选择每个元素的赝势类型**。本例中演示给Zn选择`Zn_pv`的`PBE`赝势。选择功能`104`，依次输入需要设定的赝势类型`O`和`Zn_pv`，如果设定的赝势目录下没有你选择的赝势类型，将会提示你重新输入。
@@ -450,7 +450,7 @@ If you want use the default setting, type 0, if modity type 1
 
 以官网的[CO在Ni表面的吸附模型](http://cms.mpi.univie.ac.at/wiki/index.php/Partial_DOS_of_CO_on_Ni_111_surface)和[Ni 100 surface](http://cms.mpi.univie.ac.at/wiki/index.php/Ni_100_surface_DOS)为例提取 PDOS。也可在大师兄群里(`217821116`)下载到`VASP Official Tutorials.pdf`
 
-CO吸附的例子中设置了`LORBIT=11`投影了轨道,关闭了自旋极化。
+CO 吸附的例子中设置了`LORBIT=11`投影了轨道,关闭了自旋极化。
 
 在`/vaspkit.0.73/examples/LDOS_PDOS/Partial_DOS_of_CO_on_Ni_111_surface`目录下启动`vaspkit`，输入命令`115`选择子功能`The Sum of Projected DOS for Selected Atoms and orbitals`。我们需要提取的是`O`的`s，p`轨道，`C`的`s，p`轨道以及表面的`dxy`和`d3z2-r2(dz2)`轨道。首先提示你选择元素（累加），第一次输入元素`O`，回车后提示你输入提取的轨道名（累加），第一次输入轨道`s`。回车后重复以上两个操作。如果想结束输入，在**元素选择行**直接按**回车键**结束输入。
 
@@ -482,7 +482,7 @@ O - s - O - p - C - s - C - p - Ni - dxy - Ni - dz2 - 'Enter'
   -26.58266    0.00000    0.00000    0.00000    0.00000    0.00000    0.00000
 ```
 
-第一行是列名，也就是轨道的名称，2-301行为PDOS的数据点。拖入Origin可以得到PDOS图，官网的图也放在下面供参考。在`~/.vaspkit`中打开绘图设置后，`vaspkit`会自动绘制`PDOS`图。VASP5.4.4`计算的O的s轨道的PDOS会比官网例子低一点，此现象已经用`P4VASP`验证无误。
+第一行是列名，也就是轨道的名称，2-301行为PDOS的数据点。拖入 `Origin` 可以得到 PDOS图，官网的图也放在下面供参考。在`~/.vaspkit`中打开绘图设置后，`vaspkit`会自动绘制`PDOS`图。VASP5.4.4`计算的O的s轨道的PDOS会比官网例子低一点，此现象已经用`P4VASP`验证无误。
 
 ![](DOS_plot.png)
 
@@ -1307,7 +1307,7 @@ for i in *.cif
 
 ### 6. VASPKIT的引用和手册
 
-本文档可以作为`vaspkit`的中文手册，目前正在完善。你也可以在以下QQ群里（`331895604`,`364586948`,`217821116`）找到开发者交流，欢迎大家使用`vaspkit`，并及时反馈BUG。**其中群`331895604`是`vaspkit` 内测和专用讨论群。**
+本文档可以作为`vaspkit`的中文手册，目前正在完善。你也可以在以下 QQ群里（`331895604`,`364586948`,`217821116`）找到开发者交流，欢迎大家使用`vaspkit`，并及时反馈BUG。**其中群`331895604`是`vaspkit` 内测和专用讨论群。**
 最新版会发布在以上三个群里, 我的[Github Repository ](https://github.com/tamaswells/VASP_script)以及 `vaspkit`的[官方网址](https://sourceforge.net/projects/vaspkit/) 。引用参考： `V. Wang, N. Xu, VASPKIT: A Pre- and Post-Processing Program for the VASP Code. http://vaspkit.sourceforge.net.`
 本文档由`浙江大学`的`许楠`同学撰写，邮箱地址为`tamas@zju.edu.cn`。
 
