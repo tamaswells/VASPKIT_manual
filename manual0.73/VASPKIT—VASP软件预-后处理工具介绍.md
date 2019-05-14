@@ -209,23 +209,23 @@ Gamma
    9   9   5
 0.0  0.0  0.0
 ```
-`Learn VASP The Hard Way Ex19 谁偷走的我的机时？（三）`提到了一个简单的K点数目判断准则，对于半导体k点数目乘实空间对应晶矢量大于20Å（参考下图），本例中ka=29.62Å已经符合经验规律。刘锦程提到对于非正交体系 ，倒格矢长度和晶常数不满足反比关系，所以采用ka≈kb≈kc的经验准则并不能保证 K点密度在各个方向长相等。而`vaspkit`严格计算了倒空间晶格矢量比例，**选用经验“步长”（倒空间长度除以K点数目）0.03~0.04**，`vaspkit`就能根据所选的K点密度自动生成各个方向的K点数，此时倒空间K点的**resolution** 为$2\pi\cdot0.04  \AA^{-1}$.
+`Learn VASP The Hard Way Ex19 谁偷走的我的机时？（三）`提到了一个简单的K点数目判断准则，对于半导体k点数目乘实空间对应晶矢量大于 20 Å（参考下图），本例中 ka=29.62 Å 已经符合经验规律。刘锦程提到对于非正交体系 ，倒格矢长度和晶常数不满足反比关系，所以采用ka≈kb≈kc的经验准则并不能保证 K点密度在各个方向长相等。而`vaspkit`严格计算了倒空间晶格矢量比例，**选用经验“步长”（倒空间长度除以K点数目）0.03~0.04**，`vaspkit`就能根据所选的K点密度自动生成各个方向的K点数，此时倒空间K点的**resolution** 为$2\pi\cdot0.04  \AA^{-1}$.
 
 <img src="K-setting.png" width=80% height=80% />
 
 生成KPOINTS的同时，**会根据POSCAR中的元素类型从赝势库中提取并组合生成POTCAR**，前提是你在`~/.vaspkit`里正确设置了`PBE_PATH`的路径，并根据`POTCAR_TYPE`选择是生成GGA-PW91、LDA还是PBE的赝势。值得注意的是提示信息`Written POTCAR File with the Recommended Potential!`，意味着`vaspkit`根据[VASP官网的推荐](http://cms.mpi.univie.ac.at/vasp/vasp/Recommended_PAW_potentials_DFT_calculations_using_vasp_5_2.html) 从PBE的赝势库中选择赝势。
 PBE的赝势分为几种，无后缀、`_pv,_sv,_d` 和数字后缀，`_pv,_sv,_d` 就是说`semi-core`的`p,s`或者`d`也当做价态处理了。因为有些情况下，次外层电子也参与了成键。刘锦程提到进行`Bader`电荷分析，需要采用带`_pv,_sv`的赝势。特别地，官网提到`Important Note: If dimers with short bonds are present in the compound (O2 , CO, N2 , F2 , P2 , S2 , Cl2 ), we recommend to use the _h potentials. Specifically, C_h, O_h, N_h, F_h, P_h, S_h, Cl_h.`常用的做法是：用两种赝势测试一下对自己所关心的问题的影响情况。在影响不大的情况下，选用不含后缀的赝势，毕竟包含更多的价电子，截断能上升很多，计算量明显增大。
 
->如果需要手动生成POTCAR，可以通过功能`104`**手动选择每个元素的赝势类型**。本例中演示给Zn选择`Zn_pv`的`PBE`赝势。选择功能`104`，依次输入需要设定的赝势类型`O`和`Zn_pv`，如果设定的赝势目录下没有你选择的赝势类型，将会提示你重新输入。
+>如果需要手动生成POTCAR，可以通过功能`104`**手动选择每个元素的赝势类型**。本例中演示给Zn选择`Zn`的`PBE`赝势。选择功能`104`，依次输入需要设定的赝势类型`O`和`Zn`，如果设定的赝势目录下没有你选择的赝势类型，将会提示你重新输入。
 ```
  -->> (1) Reading Structural Parameters from POSCAR File...
  Auto detected POTCAR_TYPE is O, please type the one you want!
 O
  Auto detected POTCAR_TYPE is Zn, please type the one you want!
-Zn_pv
+Zn
  -->> (2) Written POTCAR File with user specified Potential!
 ```
-通过命令`grep TIT POTCAR`可以看到POTCAR中的赝势为`O`和`Zn_pv`，满足我们的需求。
+通过命令`grep TIT POTCAR`可以看到POTCAR中的赝势为`O`和`Zn`，满足我们的需求。
 为了取得有意义的结果，需要满足INCAR中的ENCUT大于POTCAR中的所有元素的ENMAX。通过以下命令可以查看所有元素的ENMAX：
 ```bash
 grep ENMAX POTCAR
